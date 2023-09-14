@@ -11,55 +11,68 @@
 
 <body class="h-full grid place-items-center">
     <div id="app">
-        <section>
-            <h3 class="font-bold mb-2">Assignments</h3>
+        <section v-show="incomplete.length">
+            <h2 class="font-bold">In Progress</h2>
+
             <ul>
-                <li v-for="assignment in assignments.filter(a => ! a.completed)" :key="assignment.id">
+                <li v-for="assignment in incomplete" :key="assignment.id">
                     <label>
                         {{ assignment . name }}
-                        <input type="checkbox" v-model="assignment.completed">
+                        <input type="checkbox" v-model="assignment.complete">
+
                     </label>
                 </li>
             </ul>
-
         </section>
-       
-        <section class="mt-8" v-show="assignments.filter(a => a.completed).length">
-            <h3 class="font-bold mb-2">Completed Assignments</h3>
+
+        <section v-show="complete.length" class="mt-4">
+            <h2 class="font-bold">Complete</h2>
+
             <ul>
-                <li v-for="assignment in assignments.filter(a => a.completed)" :key="assignment.id">
+                <li v-for="assignment in complete" :key="assignment.id">
                     <label>
                         {{ assignment . name }}
-                        <input type="checkbox" v-model="assignment.completed">
+                        <input type="checkbox" v-model="assignment.complete">
+
                     </label>
                 </li>
             </ul>
-
         </section>
     </div>
+
 
     <script>
         let app = {
             data() {
                 return {
                     assignments: [{
+                            id: 1,
                             name: 'Wake Up',
-                            completed: false,
-                            id: 1
+                            complete: true
                         },
                         {
-                            name: 'Brush Teeth',
-                            completed: false,
-                            id: 2
+                            id: 2,
+                            name: 'Brush teeth',
+                            complete: true
                         },
                         {
-                            name: 'Shower',
-                            completed: false,
-                            id: 3
-                        },
+                            id: 3,
+                            name: 'Call Amalia',
+                            complete: true
+                        }
                     ]
                 }
             },
+
+            computed: {
+                complete() {
+                    return this.assignments.filter(a => a.complete);
+                },
+
+                incomplete() {
+                    return this.assignments.filter(a => !a.complete);
+                }
+            }
         }
 
         Vue.createApp(app).mount('#app');
