@@ -9,29 +9,16 @@
 </head>
 <body class="h-full grid place-items-center">
     <div id="app">
-        <app-button>Submit</app-button>
+        <app-button type="primary">Submit</app-button>
     </div>
 
-    <script>
-        let app = {
-            components: {
-                'app-button': {
-                    template: `
-                    <button class="bg-lime-300 p-2 rounded-md disabled:bg-red-500" :disabled="processing"><slot /></button>
-                    `,
-                    data() {
-                        return {
-                                processing: true
-                        }
-                    },
-                }
-            },
+    <script type="module">
+        import App from "./js/components/App.js";
+
+        
             
 
-            
-        }
-
-        Vue.createApp(app).mount('#app');
+        Vue.createApp(App).mount('#app');
     </script>
 </body>
 </html>
