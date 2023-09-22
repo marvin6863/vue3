@@ -10,6 +10,10 @@ export default {
         
         <assignment-list :assignments="filters.complete" title="Completed"></assignment-list>
 
+        <form @submit.prevent="add">
+            <input v-model="newAssignment" placeholder="New Assignment" class="text-black rounded p-2" />
+            <button type="submit" class="bg-lime-400 hover:bg-green-600 p-2 rounded ml-2">Add</button>
+        </form>
     `,
 
     data() {
@@ -29,7 +33,9 @@ export default {
                 name: 'Call Amalia',
                 complete: true
                 }
-            ]       
+            ],
+            
+            newAssignment: ''
          }
     },
 
@@ -41,5 +47,18 @@ export default {
                 complete: this.assignments.filter(a => a.complete),
             }
         }
-    }
+    },
+
+    methods: {
+        add() {
+            
+            this.assignments.push({
+                name: this.newAssignment,
+                completed: false,
+                id: this.assignments.length + 1
+            });
+
+            this.newAssignment = '';
+        }
+    },
 }
